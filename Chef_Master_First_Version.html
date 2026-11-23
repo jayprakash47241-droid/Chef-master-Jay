@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#171717">
+<title>Chef Master</title>
+<style>
+:root{--bg:#101214;--panel:#1b1f22;--gold:#e5b94f;--muted:#aeb5ba;--line:#343a3f}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f6f6f6;font-family:Arial,sans-serif}
+header{padding:22px 18px;background:linear-gradient(135deg,#242424,#111);border-bottom:1px solid var(--line)}
+.brand{color:var(--gold);font-size:12px;letter-spacing:3px;font-weight:bold}.title{font-size:28px;font-weight:800;margin:7px 0 3px}.sub{color:var(--muted);font-size:13px}
+main{padding:16px;max-width:760px;margin:auto}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;min-height:112px}
+.card .ico{font-size:25px}.card h3{margin:10px 0 5px;font-size:16px}.card p{margin:0;color:var(--muted);font-size:12px;line-height:1.4}
+section{margin-top:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+h2{font-size:18px;margin:0 0 12px;color:var(--gold)}
+label{display:block;font-size:13px;color:var(--muted);margin:10px 0 5px}
+input,select,textarea{width:100%;padding:12px;border-radius:9px;border:1px solid var(--line);background:#101416;color:white;font-size:16px}
+button{border:0;border-radius:9px;background:var(--gold);color:#171717;font-weight:bold;padding:12px 16px;font-size:14px;margin-top:12px;width:100%}
+.result{margin-top:12px;padding:12px;background:#111719;border-radius:9px;color:#f4d88e;white-space:pre-wrap;line-height:1.5}
+footer{text-align:center;color:#788188;font-size:11px;padding:24px}
+@media(min-width:600px){.grid{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<header><div class="brand">PROFESSIONAL KITCHEN TOOL</div><div class="title">👨‍🍳 CHEF MASTER</div><div class="sub">Your kitchen assistant · Hindi + English</div></header>
+<main>
+<div class="grid">
+<div class="card"><div class="ico">📖</div><h3>Recipe Book</h3><p>रेसिपी और सामग्री का रिकॉर्ड</p></div>
+<div class="card"><div class="ico">⚖️</div><h3>Recipe Calculator</h3><p>किसी भी मात्रा के लिए सामग्री निकालें</p></div>
+<div class="card"><div class="ico">💰</div><h3>Food Costing</h3><p>डिश की लागत का हिसाब</p></div>
+<div class="card"><div class="ico">📦</div><h3>Stock Notes</h3><p>स्टॉक और किचन नोट्स</p></div>
+</div>
+
+<section>
+<h2>⚖️ Recipe Calculator</h2>
+<label>रेसिपी का नाम</label><input id="recipe" placeholder="जैसे Sambhar">
+<label>मूल मात्रा (किलो)</label><input id="base" type="number" min="0.01" step="0.01" value="1">
+<label>कितनी मात्रा बनानी है (किलो)</label><input id="target" type="number" min="0.01" step="0.01" value="5">
+<label>सामग्री और मूल मात्रा लिखें</label><textarea id="ingredients" rows="4" placeholder="Toor dal - 1 kg&#10;Tomato - 500 gm&#10;Oil - 100 ml"></textarea>
+<button onclick="calculate()">मात्रा निकालें</button>
+<div class="result" id="calcResult">यहाँ आपकी नई सामग्री की मात्रा दिखाई देगी।</div>
+</section>
+
+<section>
+<h2>💰 Food Costing</h2>
+<label>डिश का नाम</label><input id="dish" placeholder="जैसे Paneer Butter Masala">
+<label>कुल सामग्री लागत (₹)</label><input id="cost" type="number" min="0" placeholder="उदाहरण: 180">
+<label>कितनी प्लेट बनेंगी</label><input id="plates" type="number" min="1" placeholder="उदाहरण: 6">
+<button onclick="costing()">प्रति प्लेट लागत निकालें</button>
+<div class="result" id="costResult">प्रति प्लेट लागत यहाँ दिखेगी।</div>
+</section>
+
+<section>
+<h2>📝 Kitchen Notes</h2>
+<label>आज का नोट</label><textarea id="note" rows="3" placeholder="आज का स्टॉक, ऑर्डर या जरूरी नोट..."></textarea>
+<button onclick="saveNote()">नोट सेव करें</button>
+<div class="result" id="notes">सेव किए गए नोट इसी फोन के ब्राउज़र में रहेंगे।</div>
+</section>
+</main>
+<footer>CHEF MASTER · First version</footer>
+<script>
+function calculate(){
+ const base=Number(document.getElementById('base').value), target=Number(document.getElementById('target').value);
+ const name=document.getElementById('recipe').value||'आपकी रेसिपी';
+ const lines=document.getElementById('ingredients').value.split('\n').filter(x=>x.trim());
+ if(!base||!target||base<=0||!lines.length){document.getElementById('calcResult').textContent='कृपया मूल मात्रा, नई मात्रा और सामग्री भरें।';return;}
+ const factor=target/base;
+ document.getElementById('calcResult').textContent=name+' — '+target+' kg के लिए\nगुणक: '+factor.toFixed(2)+'x\n\n'+lines.map(x=>'• '+x+'  →  '+factor.toFixed(2)+' गुना').join('\n')+'\n\nनोट: सामग्री की मात्रा को भी इसी गुणक से गुणा करें।';
+}
+function costing(){
+ const c=Number(document.getElementById('cost').value),p=Number(document.getElementById('plates').value);
+ if(c<0||!p){document.getElementById('costResult').textContent='कृपया लागत और प्लेट की संख्या भरें।';return;}
+ document.getElementById('costResult').textContent=(document.getElementById('dish').value||'डिश')+'\nकुल लागत: ₹'+c.toFixed(2)+'\nप्लेट: '+p+'\nप्रति प्लेट लागत: ₹'+(c/p).toFixed(2);
+}
+function saveNote(){
+ const n=document.getElementById('note').value.trim();if(!n)return;
+ const all=JSON.parse(localStorage.getItem('chefmaster_notes')||'[]');all.unshift(new Date().toLocaleString('hi-IN')+' — '+n);
+ localStorage.setItem('chefmaster_notes',JSON.stringify(all));document.getElementById('note').value='';showNotes();
+}
+function showNotes(){const all=JSON.parse(localStorage.getItem('chefmaster_notes')||'[]');document.getElementById('notes').textContent=all.length?all.join('\n\n'):'अभी कोई नोट सेव नहीं है।';}
+showNotes();
+</script>
+</body></html>
