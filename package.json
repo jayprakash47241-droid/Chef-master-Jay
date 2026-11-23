@@ -1,0 +1,16 @@
+{
+  "name": "chef-master-jay",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Chef Master kitchen assistant",
+  "scripts": {
+    "build": "mkdir -p www && cp Chef_Master_First_Version.html www/index.html"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.2.1",
+    "@capacitor/core": "^6.2.1"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.2.1"
+  }
+}
