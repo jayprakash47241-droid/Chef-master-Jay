@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -6,80 +7,179 @@
 <meta name="theme-color" content="#171717">
 <title>Chef Master</title>
 <style>
-:root{--bg:#101214;--panel:#1b1f22;--gold:#e5b94f;--muted:#aeb5ba;--line:#343a3f}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f6f6f6;font-family:Arial,sans-serif}
-header{padding:22px 18px;background:linear-gradient(135deg,#242424,#111);border-bottom:1px solid var(--line)}
-.brand{color:var(--gold);font-size:12px;letter-spacing:3px;font-weight:bold}.title{font-size:28px;font-weight:800;margin:7px 0 3px}.sub{color:var(--muted);font-size:13px}
-main{padding:16px;max-width:760px;margin:auto}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;min-height:112px}
-.card .ico{font-size:25px}.card h3{margin:10px 0 5px;font-size:16px}.card p{margin:0;color:var(--muted);font-size:12px;line-height:1.4}
-section{margin-top:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
-h2{font-size:18px;margin:0 0 12px;color:var(--gold)}
-label{display:block;font-size:13px;color:var(--muted);margin:10px 0 5px}
-input,select,textarea{width:100%;padding:12px;border-radius:9px;border:1px solid var(--line);background:#101416;color:white;font-size:16px}
-button{border:0;border-radius:9px;background:var(--gold);color:#171717;font-weight:bold;padding:12px 16px;font-size:14px;margin-top:12px;width:100%}
-.result{margin-top:12px;padding:12px;background:#111719;border-radius:9px;color:#f4d88e;white-space:pre-wrap;line-height:1.5}
-footer{text-align:center;color:#788188;font-size:11px;padding:24px}
-@media(min-width:600px){.grid{grid-template-columns:repeat(4,1fr)}}
+*{box-sizing:border-box}
+body{margin:0;background:#101214;color:#fff;font-family:Arial,sans-serif}
+header{background:#1b1f22;padding:18px;text-align:center;border-bottom:2px solid #d6ad55}
+header h1{margin:0;color:#e5b94b}
+header p{margin:6px 0 0;color:#bbb}
+main{padding:15px;max-width:700px;margin:auto}
+button{background:#d6ad55;color:#171717;border:0;padding:12px 16px;border-radius:8px;font-weight:bold;cursor:pointer}
+input,textarea,select{width:100%;padding:12px;margin:7px 0 14px;background:#252a2e;color:white;border:1px solid #555;border-radius:7px}
+.card{background:#1b1f22;padding:16px;border-radius:12px;margin:12px 0;border:1px solid #333}
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.menu button{min-height:75px;font-size:16px}
+h2{color:#e5b94b}
+.small{color:#aaa;font-size:13px}
+.hidden{display:none}
+.back{margin-bottom:15px}
+.item{padding:10px;border-bottom:1px solid #444}
 </style>
 </head>
 <body>
-<header><div class="brand">PROFESSIONAL KITCHEN TOOL</div><div class="title">👨‍🍳 CHEF MASTER</div><div class="sub">Your kitchen assistant · Hindi + English</div></header>
+<header>
+<h1>👨‍🍳 CHEF MASTER</h1>
+<p id="subtitle">Your Professional Kitchen Assistant</p>
+</header>
 <main>
-<div class="grid">
-<div class="card"><div class="ico">📖</div><h3>Recipe Book</h3><p>रेसिपी और सामग्री का रिकॉर्ड</p></div>
-<div class="card"><div class="ico">⚖️</div><h3>Recipe Calculator</h3><p>किसी भी मात्रा के लिए सामग्री निकालें</p></div>
-<div class="card"><div class="ico">💰</div><h3>Food Costing</h3><p>डिश की लागत का हिसाब</p></div>
-<div class="card"><div class="ico">📦</div><h3>Stock Notes</h3><p>स्टॉक और किचन नोट्स</p></div>
+<section id="home">
+<h2 id="welcome">आपका किचन असिस्टेंट</h2>
+<div class="menu">
+<button onclick="show('recipes')">📖 <span data-en="Recipe Book" data-hi="रेसिपी बुक">रेसिपी बुक</span></button>
+<button onclick="show('calculator')">⚖️ <span data-en="Recipe Calculator" data-hi="रेसिपी कैलकुलेटर">रेसिपी कैलकुलेटर</span></button>
+<button onclick="show('costing')">💰 <span data-en="Food Costing" data-hi="फूड कॉस्टिंग">फूड कॉस्टिंग</span></button>
+<button onclick="show('notes')">📝 <span data-en="Kitchen Notes" data-hi="किचन नोट्स">किचन नोट्स</span></button>
+<button onclick="show('stock')">📦 <span data-en="Stock Notes" data-hi="स्टॉक नोट्स">स्टॉक नोट्स</span></button>
+<button onclick="show('settings')">⚙️ <span data-en="Settings" data-hi="सेटिंग्स">सेटिंग्स</span></button>
 </div>
+</section>
 
-<section>
+<section id="recipes" class="hidden">
+<button class="back" onclick="show('home')">← Home</button>
+<h2>📖 Recipe Book</h2>
+<input id="recipeName" placeholder="Recipe Name / रेसिपी का नाम">
+<textarea id="recipeText" rows="5" placeholder="Ingredients and Method / सामग्री और विधि"></textarea>
+<button onclick="saveRecipe()">Save Recipe</button>
+<div id="recipeList"></div>
+</section>
+
+<section id="calculator" class="hidden">
+<button class="back" onclick="show('home')">← Home</button>
 <h2>⚖️ Recipe Calculator</h2>
-<label>रेसिपी का नाम</label><input id="recipe" placeholder="जैसे Sambhar">
-<label>मूल मात्रा (किलो)</label><input id="base" type="number" min="0.01" step="0.01" value="1">
-<label>कितनी मात्रा बनानी है (किलो)</label><input id="target" type="number" min="0.01" step="0.01" value="5">
-<label>सामग्री और मूल मात्रा लिखें</label><textarea id="ingredients" rows="4" placeholder="Toor dal - 1 kg&#10;Tomato - 500 gm&#10;Oil - 100 ml"></textarea>
-<button onclick="calculate()">मात्रा निकालें</button>
-<div class="result" id="calcResult">यहाँ आपकी नई सामग्री की मात्रा दिखाई देगी।</div>
+<label>Recipe Name</label>
+<input id="calcName" placeholder="Example: Sambar">
+<label>Original Quantity (kg)</label>
+<input id="original" type="number" step="any" value="1">
+<label>Required Quantity (kg)</label>
+<input id="required" type="number" step="any" value="5">
+<label>Ingredients (one item per line)</label>
+<textarea id="ingredients" rows="6" placeholder="Toor Dal 1 kg&#10;Tomato 500 gm&#10;Oil 100 ml"></textarea>
+<button onclick="calculate()">Calculate</button>
+<div id="calcResult"></div>
 </section>
 
-<section>
+<section id="costing" class="hidden">
+<button class="back" onclick="show('home')">← Home</button>
 <h2>💰 Food Costing</h2>
-<label>डिश का नाम</label><input id="dish" placeholder="जैसे Paneer Butter Masala">
-<label>कुल सामग्री लागत (₹)</label><input id="cost" type="number" min="0" placeholder="उदाहरण: 180">
-<label>कितनी प्लेट बनेंगी</label><input id="plates" type="number" min="1" placeholder="उदाहरण: 6">
-<button onclick="costing()">प्रति प्लेट लागत निकालें</button>
-<div class="result" id="costResult">प्रति प्लेट लागत यहाँ दिखेगी।</div>
+<label>Ingredient Name</label>
+<input id="foodName" placeholder="Example: Paneer">
+<label>Quantity</label>
+<input id="foodQty" type="number" step="any" placeholder="Quantity">
+<label>Rate per unit (₹)</label>
+<input id="foodRate" type="number" step="any" placeholder="Rate">
+<button onclick="addCost()">Add Item</button>
+<div id="costList"></div>
+<h3 id="totalCost">Total Cost: ₹0</h3>
 </section>
 
-<section>
+<section id="notes" class="hidden">
+<button class="back" onclick="show('home')">← Home</button>
 <h2>📝 Kitchen Notes</h2>
-<label>आज का नोट</label><textarea id="note" rows="3" placeholder="आज का स्टॉक, ऑर्डर या जरूरी नोट..."></textarea>
-<button onclick="saveNote()">नोट सेव करें</button>
-<div class="result" id="notes">सेव किए गए नोट इसी फोन के ब्राउज़र में रहेंगे।</div>
+<textarea id="kitchenNote" rows="8" placeholder="Write your kitchen notes here..."></textarea>
+<button onclick="saveNote()">Save Notes</button>
+<p id="noteStatus"></p>
+</section>
+
+<section id="stock" class="hidden">
+<button class="back" onclick="show('home')">← Home</button>
+<h2>📦 Stock Notes</h2>
+<input id="stockName" placeholder="Item Name">
+<input id="stockQty" placeholder="Quantity">
+<button onclick="addStock()">Add Stock</button>
+<div id="stockList"></div>
+</section>
+
+<section id="settings" class="hidden">
+<button class="back" onclick="show('home')">← Home</button>
+<h2>⚙️ Settings / सेटिंग्स</h2>
+<div class="card">
+<label>Language / भाषा चुनें</label>
+<select id="language" onchange="changeLanguage(this.value)">
+<option value="hi">हिंदी (Hindi)</option>
+<option value="en">English</option>
+</select>
+<p class="small">Your language preference will be saved automatically.</p>
+</div>
+<div class="card">
+<h3>App Information</h3>
+<p>App Name: Chef Master</p>
+<p>Version: 1.0.0</p>
+<p>Professional Kitchen Assistant</p>
+</div>
+<button onclick="show('home')">🏠 Back to Home</button>
 </section>
 </main>
-<footer>CHEF MASTER · First version</footer>
+
 <script>
+function show(id){
+document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
+document.getElementById(id).classList.remove('hidden');
+}
+function getData(key){return JSON.parse(localStorage.getItem(key)||'[]')}
+function putData(key,data){localStorage.setItem(key,JSON.stringify(data))}
+function saveRecipe(){
+let n=recipeName.value.trim(),t=recipeText.value.trim();
+if(!n||!t){alert('Please enter recipe name and details');return}
+let a=getData('recipes');a.push({n,t});putData('recipes',a);
+recipeName.value='';recipeText.value='';displayRecipes();
+}
+function displayRecipes(){
+recipeList.innerHTML=getData('recipes').map((r,i)=>`<div class="card"><b>${escapeHTML(r.n)}</b><p>${escapeHTML(r.t).replace(/\n/g,'<br>')}</p><button onclick="deleteRecipe(${i})">Delete</button></div>`).join('');
+}
+function deleteRecipe(i){let a=getData('recipes');a.splice(i,1);putData('recipes',a);displayRecipes()}
 function calculate(){
- const base=Number(document.getElementById('base').value), target=Number(document.getElementById('target').value);
- const name=document.getElementById('recipe').value||'आपकी रेसिपी';
- const lines=document.getElementById('ingredients').value.split('\n').filter(x=>x.trim());
- if(!base||!target||base<=0||!lines.length){document.getElementById('calcResult').textContent='कृपया मूल मात्रा, नई मात्रा और सामग्री भरें।';return;}
- const factor=target/base;
- document.getElementById('calcResult').textContent=name+' — '+target+' kg के लिए\nगुणक: '+factor.toFixed(2)+'x\n\n'+lines.map(x=>'• '+x+'  →  '+factor.toFixed(2)+' गुना').join('\n')+'\n\nनोट: सामग्री की मात्रा को भी इसी गुणक से गुणा करें।';
+let a=Number(original.value),b=Number(required.value);
+if(a<=0||b<=0){alert('Enter valid quantities');return}
+let factor=b/a;
+let lines=ingredients.value.split('\n').filter(x=>x.trim());
+calcResult.innerHTML='<div class="card"><h3>'+escapeHTML(calcName.value||'Recipe')+'</h3><p>Multiplier: '+factor.toFixed(2)+'</p>'+lines.map(x=>'<div class="item">'+escapeHTML(x)+' × '+factor.toFixed(2)+'</div>').join('')+'</div>';
 }
-function costing(){
- const c=Number(document.getElementById('cost').value),p=Number(document.getElementById('plates').value);
- if(c<0||!p){document.getElementById('costResult').textContent='कृपया लागत और प्लेट की संख्या भरें।';return;}
- document.getElementById('costResult').textContent=(document.getElementById('dish').value||'डिश')+'\nकुल लागत: ₹'+c.toFixed(2)+'\nप्लेट: '+p+'\nप्रति प्लेट लागत: ₹'+(c/p).toFixed(2);
+function addCost(){
+let n=foodName.value.trim(),q=Number(foodQty.value),r=Number(foodRate.value);
+if(!n||q<=0||r<0||!foodQty.value||!foodRate.value){alert('Enter valid details');return}
+let a=getData('costs');a.push({n,q,r});putData('costs',a);
+foodName.value='';foodQty.value='';foodRate.value='';displayCosts();
 }
-function saveNote(){
- const n=document.getElementById('note').value.trim();if(!n)return;
- const all=JSON.parse(localStorage.getItem('chefmaster_notes')||'[]');all.unshift(new Date().toLocaleString('hi-IN')+' — '+n);
- localStorage.setItem('chefmaster_notes',JSON.stringify(all));document.getElementById('note').value='';showNotes();
+function displayCosts(){
+let a=getData('costs'),total=0;
+costList.innerHTML=a.map((x,i)=>{let c=x.q*x.r;total+=c;return `<div class="item">${escapeHTML(x.n)} — ₹${c.toFixed(2)} <button onclick="deleteCost(${i})">X</button></div>`}).join('');
+totalCost.textContent='Total Cost: ₹'+total.toFixed(2);
 }
-function showNotes(){const all=JSON.parse(localStorage.getItem('chefmaster_notes')||'[]');document.getElementById('notes').textContent=all.length?all.join('\n\n'):'अभी कोई नोट सेव नहीं है।';}
-showNotes();
+function deleteCost(i){let a=getData('costs');a.splice(i,1);putData('costs',a);displayCosts()}
+function saveNote(){localStorage.setItem('kitchenNote',kitchenNote.value);noteStatus.textContent='Notes saved successfully!'}
+function addStock(){
+let n=stockName.value.trim(),q=stockQty.value.trim();
+if(!n||!q){alert('Enter item and quantity');return}
+let a=getData('stock');a.push({n,q});putData('stock',a);
+stockName.value='';stockQty.value='';displayStock();
+}
+function displayStock(){
+stockList.innerHTML=getData('stock').map((x,i)=>`<div class="item">${escapeHTML(x.n)} — ${escapeHTML(x.q)} <button onclick="deleteStock(${i})">X</button></div>`).join('');
+}
+function deleteStock(i){let a=getData('stock');a.splice(i,1);putData('stock',a);displayStock()}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function changeLanguage(lang){
+localStorage.setItem('chef_language',lang);
+document.documentElement.lang=lang;
+document.querySelectorAll('[data-en]').forEach(el=>el.textContent=el.dataset[lang]);
+welcome.textContent=lang==='hi'?'आपका किचन असिस्टेंट':'Your Kitchen Assistant';
+subtitle.textContent=lang==='hi'?'आपका प्रोफेशनल किचन असिस्टेंट':'Your Professional Kitchen Assistant';
+}
+window.onload=function(){
+language.value=localStorage.getItem('chef_language')||'hi';
+changeLanguage(language.value);
+kitchenNote.value=localStorage.getItem('kitchenNote')||'';
+displayRecipes();displayCosts();displayStock();
+};
 </script>
-</body></html>
+</body>
+</html>
